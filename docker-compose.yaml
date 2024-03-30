@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo_db
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+  
+  mongo_app:
+    image: mongo_app
+    container_name: mongo_app_1
+    depends_on:
+      - mongo
+    ports:
+      - 3000:3000
+    environment:
+      - MONGO_URL=mongodb://mongo_db:27017
+volumes:
+  mongo_data:
